@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, ChangeEvent, useCallback } from 'react'
+import './App.css'
+import { ChildArea } from './component/ChildArea'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const inputStyle = {
+  backgroundColor: 'lightblue',
+  border: '1px solid #ccc',
+  margin: '10px',
+  padding: '5px',
+  borderRadius: '3px',
+  // 他のスタイルプロパティを追加できます
 }
 
-export default App;
+const buttonStyle = {
+  backgroundColor: 'lightgreen',
+  border: '1px solid #888',
+  padding: '8px 15px',
+  margin: '10px',
+  borderRadius: '5px',
+  color: 'white',
+  fontSize: '16px',
+  // 他のスタイルプロパティを追加できます
+}
+
+function App() {
+  console.log('App')
+  const [text, setText] = useState('')
+  const [open, setOpen] = useState(false)
+
+  const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => setText(event.target.value)
+
+  const onChileOpen = () => setOpen(!open)
+
+  const onClickClose = useCallback(() => setOpen(false),[setOpen])
+
+  return (
+    <div className="App">
+      <input value={text} onChange={onChangeText} style={inputStyle}/>
+
+      <button style={buttonStyle} onClick={onChileOpen}>表示</button>
+
+      <ChildArea open={open} onClickClose={onClickClose}/>
+    </div>
+  )
+}
+
+export default App
